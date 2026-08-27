@@ -36,6 +36,12 @@
 
 - Używaj komend zdefiniowanych przez repo. Podstawowa komenda tego szablonu to `./scripts/verify.sh`.
 - Testy i smoke testy nie mogą wymagać prawdziwych sekretów ani niestabilnych usług zewnętrznych.
+- Dodawaj test jednostkowy tylko wtedy, gdy chroni ważne zachowanie, realną regresję albo prawdopodobny błąd; każdy nowy test musi wskazywać konkretną, realistyczną awarię, którą wykrywa.
+- Preferuj rozszerzenie istniejącego testu i najmniejszy reprezentatywny zestaw przypadków zamiast tworzenia podobnych testów dla każdej kombinacji danych.
+- Dla stabilnie odtwarzalnego błędu dodaj minimalny test regresyjny, jeśli istniejący test nie chroni już tego zachowania.
+- Nie testuj getterów, stałych, prostych przypisań, zachowania frameworka, szczegółów implementacji ani mocków, które potwierdzają wyłącznie własną konfigurację.
+- Nie dodawaj testów dla czysto hipotetycznych przypadków bez realnej drogi wystąpienia. Brak nowego testu jest poprawny dla dokumentacji, kosmetyki, prostego okablowania i zachowania już wystarczająco pokrytego.
+- Nie traktuj liczby testów ani pokrycia jako celu. Review nie może żądać dodatkowego testu bez wskazania wartościowego zachowania lub realistycznego ryzyka, które pozostaje niechronione.
 - Po istotnej zmianie zapisz w `STATUS.md` wykonaną walidację i jej wynik.
 - Nie używaj `STATUS.md` jako dziennika. Zachowuj bieżący stan, ostatnią istotną walidację, aktywne ryzyka i następny krok.
 - Dla ryzykownych lub większych zmian wykonaj niezależne review diffu przed publikacją.
