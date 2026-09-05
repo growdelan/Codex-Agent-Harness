@@ -33,8 +33,8 @@ Małe, jasno określone zadanie wykonuj bez obowiązkowego PRD i milestone'u: oc
 
 - Główny agent implementuje, waliduje, naprawia zasadne problemy i utrzymuje stan projektu.
 - `reviewer` — niezależne review read-only, `gpt-6-astra`, reasoning `medium`. Nowy agent dla każdego milestone'u, ten sam agent do kolejnych rund poprawek.
-- `sol_implementer` — opcjonalne zamknięte zadania, gdy delegowanie daje konkretną korzyść; `gpt-5.6-sol`, reasoning `medium`.
-- `planner` — opcjonalna niezależna analiza wymagań i planu, read-only.
+- `implementer` — opcjonalne zamknięte zadania, gdy delegowanie daje konkretną korzyść; `gpt-6-astra`, reasoning `low`.
+- `planner` — opcjonalna niezależna analiza wymagań i planu, read-only; `gpt-6-astra`, reasoning `medium`.
 
 Przebieg i warunki zatrzymania pętli definiuje [run-roadmap](.agents/skills/codex-flow-run-roadmap/SKILL.md). Aktualizuje ona `STATUS.md` i statusy roadmapy na bieżąco. Pełna redakcja specyfikacji i README może poczekać do finalizacji; wymagane artefakty produktu są realizowane wraz z milestone'em.
 

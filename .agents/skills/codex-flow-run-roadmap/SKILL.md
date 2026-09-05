@@ -14,7 +14,7 @@ description: Wykonaj wykonalne milestone'y z ROADMAP.md w głównej rozmowie, z 
 
 ## Podział odpowiedzialności
 
-Główny agent implementuje, waliduje, rozpatruje uwagi i utrzymuje checkpoint. Nie deleguj implementacji wyłącznie po to, żeby główny agent czekał na raport. Opcjonalny `sol_implementer` służy do zamkniętego zadania, gdy delegowanie daje konkretną korzyść, np. niezależnej pracy równoległej albo izolacji dużej ilości szczegółów. Przekaż mu zakres i własność plików; pamiętaj, że agenci współdzielą repo.
+Główny agent implementuje, waliduje, rozpatruje uwagi i utrzymuje checkpoint. Nie deleguj implementacji wyłącznie po to, żeby główny agent czekał na raport. Opcjonalny `implementer` służy do zamkniętego zadania, gdy delegowanie daje konkretną korzyść, np. niezależnej pracy równoległej albo izolacji dużej ilości szczegółów. Przekaż mu zakres i własność plików; pamiętaj, że agenci współdzielą repo.
 
 Review wykonuje osobny custom agent `reviewer`. Dla każdego milestone'u utwórz nowego reviewera z wymaganiami, bazą porównania, pełnym diffem milestone'u i wynikami walidacji. Zachowaj tego samego reviewera do sprawdzenia poprawek tego milestone'u. Nie uruchamiaj review równolegle ze zmianami ocenianych plików. Gdy reviewer jest niedostępny, zapisz blokadę zamiast zastępować niezależne review samooceną.
 
