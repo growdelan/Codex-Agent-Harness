@@ -1,15 +1,15 @@
 ---
 name: codex-flow-review
-description: Wykonaj niezależne, read-only review ostatnich zmian lub wskazanego diffu pod kątem błędów, regresji, bezpieczeństwa, testów, zakresu milestone'u i zgodności z dokumentacją. Użyj po większej lub ryzykownej implementacji albo gdy użytkownik prosi o przegląd kodu.
+description: Wykonaj niezależne, read-only review wskazanego diffu pod kątem błędów, regresji, bezpieczeństwa, testów i zgodności z wymaganiami. Użyj po większej lub ryzykownej implementacji albo na prośbę o przegląd kodu.
 ---
 
 # Niezależne review
 
-1. Ustal bazę porównania i zakres diffu. Sprawdź `git status`, diff, zmienione pliki oraz właściwy milestone. Gdy review zostało zlecone przez koordynatora `$codex-flow-run-roadmap`, oceń wyłącznie diff implementacyjny tego milestone'u: kod, testy, migracje, konfigurację wykonawczą i inne artefakty runtime.
-2. Przeczytaj zmienione pliki w zakresie potrzebnym do oceny zachowania.
-3. Oceń poprawność, regresje, bezpieczeństwo, obsługę błędów, prostotę, zbędne abstrakcje i martwy kod.
-4. Oceń, czy testy sprawdzają istotne zachowanie i czy wykonane walidacje odpowiadają ryzyku.
-5. Sprawdź zgodność z `AGENTS.md`, `spec.md`, `ROADMAP.md`, `STATUS.md` oraz `README.md`, jeśli zmieniło się użycie. Podczas review zleconego przez koordynatora `$codex-flow-run-roadmap` używaj tych plików wyłącznie jako źródła wymagań: nie oceniaj ich kompletności, nie zgłaszaj braku aktualizacji jako problemu i nie uzależniaj od niego decyzji.
-6. Nie modyfikuj żadnych plików.
+1. Jeśli jesteś autorem zmian, przekaż review osobnemu agentowi `reviewer`; nie traktuj samooceny jako niezależnego review. Jeśli otrzymałeś zadanie jako reviewer, wykonaj je sam bez dalszego delegowania.
+2. Ustal bazę i zakres porównania. Sprawdź Git, pełny diff i kryteria zadania; oddziel wcześniejsze zmiany użytkownika.
+3. Przeczytaj potrzebny kod i wymagania. Oceń poprawność, regresje, bezpieczeństwo, obsługę błędów, wydajność i zbędną złożoność.
+4. Oceń wartość testów i adekwatność walidacji. Brak skonfigurowanych lub wykonanych kontroli nie jest ich pozytywnym wynikiem. Nie żądaj nowego testu bez wskazania realistycznej awarii, która pozostaje niechroniona.
+5. Sprawdź zgodność z zakresem i dokumentacją. Dla `$codex-flow-run-roadmap` obowiązują opisane w nim zasady odroczonej dokumentacji: uwzględnij przekazane decyzje, a brak redakcyjnej synchronizacji nie blokuje; artefakty wymagane kryteriami akceptacji pozostają w zakresie review.
+6. Nie modyfikuj plików. Przy poprawkach oceń cały aktualny diff oraz wcześniejsze znaleziska.
 
-Najpierw podaj problemy pogrupowane jako krytyczne, ważne i drobne. Dla każdego wskaż plik lub obszar, wpływ, rekomendowaną poprawkę i informację, czy mieści się w bieżącym zakresie. Jeśli nie ma problemów blokujących, napisz: `Review zakończony — brak problemów blokujących.` Podczas review zleconego przez koordynatora `$codex-flow-run-roadmap` decyzja `CHANGES_REQUIRED` jest dozwolona wyłącznie dla nierozwiązanego krytycznego lub ważnego problemu implementacyjnego; drobne uwagi i braki dokumentacyjne nie blokują approval.
+Podaj problemy krytyczne, ważne i drobne, z plikiem, skutkiem, minimalną rekomendacją i informacją o zgodności z zakresem. Drobne uwagi nie blokują. Jeśli nie ma problemów blokujących, napisz: `Review zakończony — brak problemów blokujących.` Zakończ dokładnie jedną decyzją: `DECISION: APPROVED` albo `DECISION: CHANGES_REQUIRED`. Zatwierdzenie wymaga spełnionych kryteriów i wystarczających dowodów; przy brakach nazwij konkretną niezweryfikowaną właściwość.

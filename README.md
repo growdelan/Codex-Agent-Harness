@@ -1,112 +1,66 @@
 # Codex Flow — lekki harness dla projektów Python
 
-To repozytorium jest szablonem współpracy z aktualnym Codexem. Zachowuje trwałe zasady projektu, planowanie z PRD, implementację ograniczoną do milestone'u, walidację i niezależne review, ale nie dubluje natywnej orkiestracji, zarządzania modelem ani kompakcji historii rozmowy przez Codex.
-
-## Założenia
-
-- `AGENTS.md` zawiera tylko trwałe reguły repozytorium.
-- `spec.md` opisuje zachowanie i decyzje techniczne.
-- `ROADMAP.md` dzieli pracę na mierzalne przyrosty.
-- `STATUS.md` jest krótkim handoffem między sesjami.
-- Skille opisują powtarzalne workflow i są ładowane dopiero wtedy, gdy pasują do zadania.
-- Subagenci są używani tylko do niezależnej, wyspecjalizowanej pracy, gdy daje to realną korzyść.
-- Commit i push wymagają jawnego polecenia użytkownika.
+Szablon współpracy z Codexem: trwałe zasady, planowanie z PRD, małe milestone'y, walidacja i niezależne review. Główna rozmowa implementuje; osobny reviewer sprawdza wynik.
 
 ## Użycie szablonu
 
-Skopiuj do projektu:
+Skopiuj `.agents/`, `.codex/`, `docs/`, `prd/`, `scripts/`, `AGENTS.md`, `ROADMAP.md`, `STATUS.md` i `spec.md` do projektu. Nie nadpisuj jego istniejących ustaleń. Pliki `STATUS.md`, `ROADMAP.md` i `spec.md` pozostają pustymi szablonami do wypełnienia w docelowym projekcie. Dopasuj komendy i konwencje do technologii; domyślny profil to Python z `uv`.
 
-```text
-.agents/
-.codex/
-docs/
-prd/
-scripts/
-AGENTS.md
-ROADMAP.md
-STATUS.md
-spec.md
-```
+Dla nowego produktu:
 
-Po skopiowaniu:
+1. `$codex-flow-create-prd` — wywiad i zapis wymagań w `prd/`.
+2. `$codex-flow-plan-from-prd` — specyfikacja i mierzalna roadmapa. Milestone 0 ustanawia uruchamialny projekt i rzeczywistą walidację.
+3. `$codex-flow-implement-milestone` — jeden wskazany milestone; albo `$codex-flow-run-roadmap` — cała wykonalna roadmapa z niezależnym review i lokalnymi commitami.
+4. `$codex-flow-publish` — synchronizacja dokumentacji i przygotowanie, commit lub push zgodnie z poleceniem.
 
-1. Dopasuj komendy w `AGENTS.md` i `scripts/verify.sh` do projektu.
-2. Utwórz pierwszy lub kolejny PRD przez `$codex-flow-create-prd`.
-3. Wygeneruj specyfikację i roadmapę z gotowego PRD przez `$codex-flow-plan-from-prd`.
-4. Realizuj jeden uzgodniony milestone przez `$codex-flow-implement-milestone`.
-5. Dla większych lub ryzykownych zmian wykonaj `$codex-flow-review`.
-6. Jeśli review wykryje problemy, użyj `$codex-flow-address-review`.
-7. Jeśli chcesz wykonać wszystkie zaplanowane milestone'y w kontrolowanej pętli code-only, użyj `$codex-flow-run-roadmap`.
-8. Po zakończeniu pętli przekaż jej handoff do `$codex-flow-publish`, aby jednorazowo zsynchronizować dokumentację i przygotować zmianę do publikacji.
-9. Jeśli używasz `github:yeet`, uruchom go dopiero po `$codex-flow-publish`, aby wykonać staging, commit, push i utworzyć draft PR.
-
-Przy powrocie do projektu użyj `$codex-flow-resume`.
-
-## Prompt do utworzenia PRD
-
-```text
-Użyj $codex-flow-create-prd.
-
-Stwórz PRD dla nowej funkcjonalności: **[tutaj opisz aplikację albo funkcjonalność]**.
-
-Przeprowadź ze mną wywiad. Zadawaj jedno pytanie naraz, aż poznasz kontekst potrzebny do utworzenia PRD. Nie implementuj kodu ani nie aktualizuj jeszcze specyfikacji i roadmapy.
-```
+Małe, jasno określone zadanie wykonuj bez obowiązkowego PRD i milestone'u: oczekiwany wynik → zmiana → adekwatna walidacja. Większa lub ryzykowna zmiana wymaga niezależnego review. Trwałe decyzje i niedomkniętą pracę zapisz w dokumentacji.
 
 ## Skille
 
 | Skill | Zastosowanie |
 |---|---|
-| `codex-flow-resume` | Odtworzenie stanu projektu bez zmian w plikach |
-| `codex-flow-create-prd` | Wywiad produktowy i zapis pierwszego lub kolejnego PRD |
-| `codex-flow-plan-from-prd` | Pierwszy lub przyrostowy PRD → `spec.md` i `ROADMAP.md` |
-| `codex-flow-implement-milestone` | Implementacja jednego, jawnie wskazanego milestone'u |
-| `codex-flow-review` | Niezależne, read-only review ostatnich zmian |
-| `codex-flow-address-review` | Minimalne poprawki wynikające z review |
-| `codex-flow-run-roadmap` | Koordynowana implementacja i code review wszystkich milestone'ów `planned`, bez aktualizacji dokumentacji w pętli |
-| `codex-flow-compact-context` | Kompakcja przerośniętych plików kontekstu bez utraty aktywnych ustaleń |
-| `codex-flow-publish` | Dokumentacja, commit i opcjonalny push na jawne polecenie |
+| `codex-flow-resume` | Odtworzenie faktycznego stanu z checkpointu i Git bez zmian w plikach |
+| `codex-flow-create-prd` | Wywiad produktowy, jedno pytanie naraz, pierwszy lub kolejny PRD |
+| `codex-flow-plan-from-prd` | PRD → specyfikacja i małe, weryfikowalne milestone'y |
+| `codex-flow-implement-milestone` | Implementacja jednego wskazanego milestone'u i walidacja |
+| `codex-flow-review` | Niezależne review przez osobnego agenta |
+| `codex-flow-address-review` | Weryfikacja uwag i minimalne zasadne poprawki |
+| `codex-flow-run-roadmap` | Implementacja w głównej rozmowie, review, checkpoint i lokalny commit każdego milestone'u |
+| `codex-flow-compact-context` | Porządkowanie dokumentów bez utraty aktywnych ustaleń |
+| `codex-flow-publish` | Synchronizacja dokumentacji i publikacja w autoryzowanym zakresie |
 
-## Subagenci
+## Agenci i autonomiczna praca
 
-- `planner` — analizuje PRD, specyfikację i roadmapę; nie implementuje.
-- `sol_implementer` — implementuje jeden milestone i wszystkie wynikające z review poprawki; w zadaniach z `$codex-flow-run-roadmap` nie aktualizuje dokumentacji; używa `gpt-5.6-sol` z reasoning `medium`.
-- `sol_reviewer` — niezależnie ocenia diff implementacyjny milestone'u w trybie read-only; w review zleconym przez `$codex-flow-run-roadmap` braki dokumentacyjne nie są findingami; używa `gpt-5.6-sol` z reasoning `high`.
+- Główny agent implementuje, waliduje, naprawia zasadne problemy i utrzymuje stan projektu.
+- `reviewer` — niezależne review read-only, `gpt-6-astra`, reasoning `medium`. Nowy agent dla każdego milestone'u, ten sam agent do kolejnych rund poprawek.
+- `sol_implementer` — opcjonalne zamknięte zadania, gdy delegowanie daje konkretną korzyść; `gpt-5.6-sol`, reasoning `medium`.
+- `planner` — opcjonalna niezależna analiza wymagań i planu, read-only.
 
-W `$codex-flow-run-roadmap` główny agent jest wyłącznie koordynatorem. Dla każdego milestone'u zachowuje jeden wątek `sol_implementer`, a po implementacji i każdej rundzie poprawek uruchamia świeży wątek `sol_reviewer`. Dokumentacja jest w tej pętli źródłem kryteriów, ale jej aktualizacja jest odłożona do jednorazowej finalizacji przez `$codex-flow-publish`. Zalecana kolejność publikacji to `$codex-flow-run-roadmap` → `$codex-flow-publish` → `github:yeet`. Poza tym workflow agenci są używani tylko wtedy, gdy pasują do zakresu zadania.
+Przebieg i warunki zatrzymania pętli definiuje [run-roadmap](.agents/skills/codex-flow-run-roadmap/SKILL.md). Aktualizuje ona `STATUS.md` i statusy roadmapy na bieżąco. Pełna redakcja specyfikacji i README może poczekać do finalizacji; wymagane artefakty produktu są realizowane wraz z milestone'em.
+
+Checkpoint zawiera bazę porównania, review, walidację, blokery i następny krok. Commit milestone'u utrwala także jego checkpoint. Przy powrocie `$codex-flow-resume` porównuje dokumentację z Git, uwzględnia pracę rozpoczętą i nie polega wyłącznie na historii rozmowy.
 
 ## Walidacja
 
-Uruchom:
+Uruchom `./scripts/verify.sh`. Skrypt sprawdza rozmiar dokumentów i dostępność `uv`, następnie uruchamia testy `unittest`, jeśli istnieje katalog `tests/`. Dodatkowe kontrole należy skonfigurować jawnie w docelowym projekcie.
 
-```bash
-./scripts/verify.sh
-```
+Sam kod wyjścia `0` nie potwierdza, że wykonano kontrole produktu: brak katalogu `tests/` powoduje pominięcie testów, a discovery może znaleźć zero przypadków. Agent powinien sprawdzić rzeczywisty wynik i zgłosić brak wykonanych kontroli zamiast uznać go za pozytywną walidację produktu.
 
-Skrypt nie zgaduje narzędzi projektu. Najpierw kontroluje rozmiar głównych plików kontekstu, następnie uruchamia `unittest` tylko wtedy, gdy istnieje katalog `tests/`. Dodatkowe polecenia należy dodać jawnie po skonfigurowaniu projektu.
+W Milestone 0 dostosuj walidację do testów, smoke testu, lintowania lub builda właściwych dla projektu. Nie dodawaj pustych testów, żeby uzyskać zielony wynik.
 
-## Limity kontekstu i archiwizacja
+## Pamięć i limity kontekstu
 
-`./scripts/check-context-size.sh` sprawdza miękkie progi:
+- `AGENTS.md`: trwałe reguły repozytorium.
+- `spec.md`: aktualne zachowanie i decyzje; szczegóły w `docs/spec/` i `docs/decisions/`.
+- `ROADMAP.md`: zakres, kryteria, walidacja, zależności i statusy `planned`, `in_progress`, `done`, `blocked`.
+- `STATUS.md`: krótki checkpoint i najbliższy krok; historyczne checkpointy pozostają w Git.
 
-| Plik | Linie | Rozmiar |
-|---|---:|---:|
-| `STATUS.md` | 150 | 12 KB |
-| `ROADMAP.md` | 350 | 30 KB |
-| `spec.md` | 500 | 40 KB |
+`./scripts/check-context-size.sh` ostrzega po przekroczeniu 150 linii / 12 KB dla STATUS, 350 / 30 KB dla ROADMAP i 500 / 40 KB dla spec. Ostrzeżenie nie blokuje walidacji. Progi można zmienić zmiennymi `STATUS_MAX_LINES`, `STATUS_MAX_BYTES`, `ROADMAP_MAX_LINES`, `ROADMAP_MAX_BYTES`, `SPEC_MAX_LINES`, `SPEC_MAX_BYTES`.
 
-Przekroczenie progu generuje ostrzeżenie, ale nie przerywa walidacji. Użyj wtedy `$codex-flow-compact-context`:
+Kompakcja następuje podczas planowania lub na jawne polecenie. Ukończone szczegóły roadmapy trafiają do `docs/archive/roadmap/`; aktualna specyfikacja pozostaje poza archiwum. Resume czyta tylko kontekst potrzebny do następnej decyzji.
 
-- `STATUS.md` pozostaje krótką pamięcią bieżącej pracy; zamknięta historia pozostaje w Git,
-- szczegóły ukończonych milestone'ów trafiają do `docs/archive/roadmap/`,
-- `spec.md` pozostaje indeksem aktualnej prawdy, a szczegóły trafiają do `docs/spec/` i `docs/decisions/`,
-- `resume` nie czyta archiwum ani niepowiązanych dokumentów domyślnie.
+## Zasady commitów i publikacji
 
-Projekt może zmienić progi przez zmienne `STATUS_MAX_LINES`, `STATUS_MAX_BYTES`, `ROADMAP_MAX_LINES`, `ROADMAP_MAX_BYTES`, `SPEC_MAX_LINES` i `SPEC_MAX_BYTES` bez modyfikowania skryptu.
+Zwykła implementacja nie autoryzuje commita. Jawne zlecenie `$codex-flow-run-roadmap`, także równoważne polecenie wykonania całej roadmapy, obejmuje lokalny commit każdego zatwierdzonego milestone'u; możesz wyraźnie wykluczyć commity. Push wymaga osobnego polecenia.
 
-## Zasady publikacji
-
-Samo zakończenie implementacji lub sesji nie oznacza zgody na commit ani push. `$codex-flow-publish` wykonuje wyłącznie operacje wskazane przez użytkownika:
-
-- „przygotuj zmiany” — aktualizacja dokumentacji i weryfikacja bez commita,
-- „commit” — przygotowanie commita bez pusha,
-- „push” lub „opublikuj” — commit, jeśli potrzebny, i push po pozytywnej walidacji.
+`$codex-flow-publish`: „przygotuj” synchronizuje dokumentację bez stagingu i commita, „commit” tworzy commit bez pusha, „push” lub „opublikuj” wykonuje push i potrzebny commit po walidacji. Jeśli korzystasz z `github:yeet`, uruchom go po przygotowaniu przez publish. Żaden workflow nie włącza do commita zmian spoza uzgodnionego zakresu.

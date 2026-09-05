@@ -1,4 +1,4 @@
 interface:
   display_name: "Codex Flow: Wykonaj roadmapę"
-  short_description: "Realizuj i reviewuj kod planned milestone'ów"
-  default_prompt: "Użyj $codex-flow-run-roadmap, aby wykonać wszystkie milestone ze statusem planned w kontrolowanej pętli."
+  short_description: "Implementuj z niezależnym review i checkpointami"
+  default_prompt: "Użyj $codex-flow-run-roadmap, aby wznowić rozpoczętą pracę i wykonać zaplanowane milestone'y w głównej rozmowie, z niezależnym review i lokalnym commitem po każdym zatwierdzonym milestone'ie. Nie wykonuj pusha."
