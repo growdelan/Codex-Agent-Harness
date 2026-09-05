@@ -1,68 +1,51 @@
 ---
 name: codex-flow-run-roadmap
-description: Wykonaj w kontrolowanej pętli wszystkie wykonalne milestone'y ze statusem planned z ROADMAP.md przez stały duet sol_implementer i sol_reviewer dla każdego milestone'u, kończąc zatwierdzony milestone osobnym lokalnym commitem. Użyj, gdy użytkownik jawnie prosi o realizację całej roadmapy, wszystkich zaplanowanych milestone'ów albo autonomiczną pracę aż do ukończenia planu lub napotkania blokera.
+description: Wykonaj wykonalne milestone'y z ROADMAP.md w głównej rozmowie, z niezależnym reviewerem i trwałym checkpointem. Jawne uruchomienie tego workflow autoryzuje lokalny commit po każdym zatwierdzonym milestone'ie, bez pusha. Użyj na prośbę o realizację całej roadmapy lub autonomiczną pracę do ukończenia planu albo blokera.
 ---
 
 # Wykonanie roadmapy
 
 ## Przygotowanie
 
-1. Uruchom `./scripts/check-context-size.sh`. Przeczytaj `AGENTS.md`, `STATUS.md`, aktywne milestone'y w `ROADMAP.md` oraz istotne sekcje lub odnośniki z `spec.md`; nie czytaj archiwum domyślnie.
-2. Sprawdź stan repo i nie włączaj do pracy niepowiązanych zmian użytkownika.
-3. Zbierz na początku rzeczywiste milestone'y `planned` w kolejności zależności. Pomiń wpisy szablonowe i elementy zablokowane, a postęp tej listy śledź w pamięci koordynatora bez ponownego wybierania milestone'ów na podstawie niezmienionego `ROADMAP.md`.
-4. Przed implementacją pokaż krótki plan kolejności. Nie czekaj na dodatkowe potwierdzenie, jeśli polecenie użytkownika jest jednoznaczne i nie ma konfliktu zakresu.
-5. Główny wątek pełni rolę koordynatora. Nie implementuje kodu; deleguje pracę agentom opisanym poniżej i scala ich wyniki.
+1. Przeczytaj `AGENTS.md`, `STATUS.md`, aktywne milestone'y z `ROADMAP.md` i potrzebne fragmenty `spec.md`. Sprawdź rozmiar kontekstu i stan Git. Nie czytaj archiwum domyślnie.
+2. Porównaj checkpoint w `STATUS.md` ze stanem repo i historią Git. Wznów uzgodniony milestone `in_progress`, następnie zbierz rzeczywiste milestone'y `planned` w kolejności zależności. Jeśli checkpoint wskazuje `approved`, ale commit nie powstał, najpierw potwierdź zgodność worktree z ocenionym zakresem i dokończ zapis/commit w autoryzowanym trybie. Nie wykonuj ponownie zatwierdzonej pracy tylko dlatego, że roadmapa nie została jeszcze zsynchronizowana. Pomijaj wpisy szablonowe; blokadę zależności zgłoś, nie obchodź jej.
+3. Pokaż kolejność i przypomnij, że ten workflow obejmuje lokalne commity. Jawne zlecenie wykonania roadmapy jest zgodą na te commity; nie pytaj ponownie. Jeśli użytkownik wykluczył commity, wykonuj pracę bez nich i zapisuj ten tryb w checkpointach.
+4. Ustal bazowy commit i istniejące zmiany użytkownika. Nie nadpisuj ich ani nie włączaj ich do commitów.
 
-## Zakres implementacji i review
+## Podział odpowiedzialności
 
-- W każdym poleceniu do implementera i reviewera zaznacz, że zadanie jest częścią `$codex-flow-run-roadmap` i obowiązują zasady z tej sekcji.
-- Dokumentacja jest wyłącznie źródłem wymagań. Implementer nie modyfikuje `ROADMAP.md`, `STATUS.md`, `spec.md` ani `README.md`, nie zapisuje w nich statusów `in_progress`, `done` ani `blocked` i nie wykonuje poprawek dotyczących wyłącznie kompletności dokumentacji.
-- Diff implementacyjny obejmuje kod, testy, migracje, konfigurację wykonawczą i inne artefakty runtime. Nie obejmuje plików zarządzania projektem ani `README.md`.
-- Niespełnione kryterium opisane w dokumentacji może blokować review tylko wtedy, gdy wskazuje konkretny problem zachowania implementacji. Sam brak aktualizacji dokumentacji nie jest findingiem i nie może powodować `CHANGES_REQUIRED`.
+Główny agent implementuje, waliduje, rozpatruje uwagi i utrzymuje checkpoint. Nie deleguj implementacji wyłącznie po to, żeby główny agent czekał na raport. Opcjonalny `sol_implementer` służy do zamkniętego zadania, gdy delegowanie daje konkretną korzyść, np. niezależnej pracy równoległej albo izolacji dużej ilości szczegółów. Przekaż mu zakres i własność plików; pamiętaj, że agenci współdzielą repo.
 
-## Agenci i kolejność
+Review wykonuje osobny custom agent `reviewer`. Dla każdego milestone'u utwórz nowego reviewera z wymaganiami, bazą porównania, pełnym diffem milestone'u i wynikami walidacji. Zachowaj tego samego reviewera do sprawdzenia poprawek tego milestone'u. Nie uruchamiaj review równolegle ze zmianami ocenianych plików. Gdy reviewer jest niedostępny, zapisz blokadę zamiast zastępować niezależne review samooceną.
 
-- Używaj Custom Agenta `sol_implementer` do implementacji i wszystkich późniejszych poprawek.
-- Używaj Custom Agenta `sol_reviewer` do niezależnego review.
-- Agenci pracują sekwencyjnie. Nie uruchamiaj implementacji i review równolegle.
-- Dla każdego milestone'u utwórz jeden wątek `sol_implementer` i zachowaj go do końca pracy nad tym milestone'em.
-- Dla każdego milestone'u utwórz jeden wątek `sol_reviewer` i wznawiaj go po każdej rundzie poprawek aż do końca pracy nad tym milestone'em.
-- Nie zastępuj wskazanych Custom Agents agentami wbudowanymi ani pracą głównego wątku.
+Pełną aktualizację `spec.md` i README można odłożyć do finalizacji przez `$codex-flow-publish`. Zapisuj jednak na bieżąco w checkpointach nowe decyzje i fakty do uwzględnienia w dokumentacji oraz przekazuj je kolejnemu milestone'owi. Brak redakcyjnej aktualizacji dokumentacji nie blokuje review. Brak instrukcji, kontraktu lub innego artefaktu będącego kryterium akceptacji milestone'u jest częścią jego zakresu i podlega review.
 
 ## Pętla milestone'ów
 
-Dla każdego kolejnego milestone'u:
+1. Potwierdź cel, zakres, kryteria akceptacji, walidację i zależności. Zapisz checkpoint rozpoczęcia w `STATUS.md` oraz status `in_progress` w `ROADMAP.md`.
+2. Wykonaj `$codex-flow-implement-milestone` w głównej rozmowie. Dla oddelegowanego fragmentu odbierz i zweryfikuj wynik. Uruchom adekwatne kontrole produktu; pominięcie kontroli nie oznacza pozytywnej walidacji.
+3. Przekaż reviewerowi cały diff milestone'u, wymagania i wyniki kontroli. Wymagaj decyzji `DECISION: APPROVED` albo `DECISION: CHANGES_REQUIRED`.
+4. Przy `CHANGES_REQUIRED` zweryfikuj każde znalezisko i użyj `$codex-flow-address-review` do zasadnych poprawek. Przekaż temu samemu reviewerowi pełny aktualny diff, wcześniejsze znaleziska, odpowiedzi i nową walidację. Maksymalnie trzy rundy poprawek; po ich wyczerpaniu zapisz blokadę i zatrzymaj pętlę.
+5. Po `APPROVED` i spełnieniu kryteriów zapisz wynik review, walidacje i status `done`. Sprawdź końcowy diff, stage'uj tylko uzgodniony zakres i wykonaj lokalny commit milestone'u, jeśli autoryzowany. Uwzględnij jego checkpoint i zmianę roadmapy w commicie. Jeśli nie da się oddzielić zmian użytkownika, zatrzymaj się przed stagingiem.
+6. Sprawdź wynik commita i stan repo. Przejdź do następnego milestone'u bez ponownego pytania. Po ostatnim milestone'ie uruchom pełną dostępną walidację integracji; jej niepowodzenie zapisz jako blokadę finalizacji, nawet jeśli wcześniejsze review były pozytywne.
 
-1. Potwierdź cel, zakres, poza zakresem, kryteria akceptacji, walidację i warunki zatrzymania.
-2. Zanotuj stan bazowy i rozdziel wcześniejsze zmiany użytkownika oraz zatwierdzone zmiany poprzednich milestone'ów od diffu bieżącego milestone'u.
-3. Utwórz wątek `sol_implementer`. Zaznacz, że zadanie jest częścią `$codex-flow-run-roadmap`, przekaż pełny zakres milestone'u, kryteria akceptacji, właściwy kontekst z dokumentacji, stan bazowy repozytorium, wcześniejsze zmiany użytkownika, ryzyka i wymagane walidacje. Poleć wykonać `$codex-flow-implement-milestone` bez zmian dokumentacji i poczekaj na zakończenie implementacji oraz walidacji.
-4. Zbierz diff implementacyjny bieżącego milestone'u, podsumowanie implementera oraz wyniki walidacji. Utwórz wątek `sol_reviewer`, zaznacz, że review jest częścią `$codex-flow-run-roadmap`, i poleć wykonać `$codex-flow-review` wyłącznie dla tego diffu.
-5. Wymagaj raportu zakończonego dokładnie jedną decyzją: `DECISION: APPROVED` albo `DECISION: CHANGES_REQUIRED`.
-6. Gdy decyzja to `CHANGES_REQUIRED`, przekaż pełny raport do tego samego wątku implementera. Przypomnij, że poprawki są częścią `$codex-flow-run-roadmap`, poleć wykonać `$codex-flow-address-review`, poprawić wyłącznie zasadne problemy implementacyjne, ponowić walidację i odpowiedzieć na każde znalezisko.
-7. Po poprawkach wznów ten sam wątek `sol_reviewer`. Zaznacz, że ponowne review jest częścią `$codex-flow-run-roadmap`, przekaż pierwotne kryteria, wcześniejsze znaleziska i odpowiedzi implementera, pełny aktualny diff implementacyjny milestone'u oraz aktualne wyniki walidacji. Reviewer ponownie ocenia cały diff implementacyjny.
-8. Powtarzaj sekwencję `ten sam sol_implementer -> ten sam sol_reviewer` do `APPROVED`, maksymalnie przez trzy rundy poprawek. Jeśli po trzeciej rundzie nadal jest `CHANGES_REQUIRED`, zatrzymaj workflow i zgłoś nierozwiązane problemy.
-9. Po `APPROVED` zapisz decyzję i wyniki walidacji w pamięci koordynatora. Nie uruchamiaj implementera wyłącznie w celu finalizacji statusu lub dokumentacji.
-10. Sprawdź końcowy diff implementacyjny i pozytywny wynik walidacji. Stage'uj wyłącznie zmiany bieżącego milestone'u i utwórz osobny, logiczny commit nazwany zgodnie z milestone'em. Jeśli zmian milestone'u nie da się bezpiecznie oddzielić od wcześniejszych zmian użytkownika, zatrzymaj workflow zamiast włączać je do commita.
-11. Sprawdź status repozytorium i potwierdź, że pozostały worktree odpowiada stanowi bazowemu sprzed milestone'u, po czym przejdź do następnego elementu początkowej listy bez ponownego pytania użytkownika.
+## Trwały checkpoint
 
-## Warunki zatrzymania
+Aktualizuj `STATUS.md` przy rozpoczęciu milestone'u, po review, przy jego zakończeniu i przed planowanym zatrzymaniem. Zachowuj krótki stan, bez pełnych logów:
 
-Zatrzymaj pętlę i zachowaj bezpieczny stan, gdy wymaganie istotnie zmienia produkt lub zakres, walidacja nie przechodzi i naprawa wykracza poza bieżący milestone, review wykryje nierozwiązany problem blokujący, limit trzech rund poprawek zostanie wyczerpany, brakuje zależności lub sekretu, występują nieoczekiwane zmiany albo użytkownik zmieni zadanie.
+- bieżący milestone i tryb commitowania;
+- commit bazowy milestone'u oraz opis wcześniejszych zmian użytkownika;
+- wynik `in_progress`, `approved`, `blocked` lub `not_started`, decyzja review i liczba rund poprawek;
+- komendy walidacji, wyniki i pominięcia z przyczyną;
+- nierozwiązane problemy i trwałe decyzje oczekujące na synchronizację dokumentacji;
+- następny krok i sposób odnalezienia commita.
 
-Nie zapisuj statusu `blocked` w dokumentacji. W handoffie wskaż milestone, konkretną blokadę oraz decyzję lub działanie potrzebne do wznowienia. Nie ogłaszaj sukcesu bez `DECISION: APPROVED`, spełnionych kryteriów i pozytywnej walidacji.
+Checkpoint zapisany w commicie milestone'u wskazuje **commit zawierający ten checkpoint** jako commit wyniku; nie próbuj wpisywać jego własnego SHA przed utworzeniem commita. Przy wznowieniu ustal ten SHA z historii Git i potwierdź zakres. Bez commita zapisz jawnie, że wynik pozostaje w worktree, wraz z zakresem plików. Sam brak checkpointu po awarii nie jest dowodem braku wykonanej pracy: porównaj także Git i kod.
 
-## Zakończenie
+Nie nadpisuj odłożonych decyzji i wyników wcześniejszych milestone'ów, dopóki nie zostały odzwierciedlone w dokumentacji lub utrwalone w commitach możliwych do odnalezienia. `STATUS.md` pozostaje krótkim indeksem, a historia checkpointów pozostaje w Git. W trybie bez commitów zachowaj zwięzłe wyniki każdego zakończonego milestone'u aż do finalizacji.
 
-Po wyczerpaniu początkowej listy uruchom pełną dostępną walidację i sprawdź końcowy diff implementacyjny. Nie sprawdzaj kompletności ani spójności aktualizacji dokumentacji w tym workflow.
+## Zatrzymanie i zakończenie
 
-Zwróć handoff do `$codex-flow-publish` zawierający:
+Zatrzymaj pracę przy zmianie zakresu wymagającej decyzji, blokadzie zależności, nieskutecznej walidacji wykraczającej poza zakres, wyczerpaniu rund review lub nieoczekiwanych zmianach. Zapisz konkretną blokadę w `STATUS.md` i właściwy status w `ROADMAP.md`. Zmianę polecenia użytkownika uwzględnij zgodnie z jej treścią.
 
-- stan bazowy workflow;
-- każdy milestone z wynikiem `approved`, `blocked` albo `not_started`, liczbą rund poprawek i końcową decyzją review;
-- wykonane i pominięte walidacje wraz z wynikami lub przyczynami pominięcia;
-- nierozwiązane ryzyka i blokery;
-- listę faktów, statusów milestone'ów oraz zmian zachowania, konfiguracji lub użycia, które publikacja powinna odzwierciedlić w `ROADMAP.md`, `STATUS.md`, `spec.md` lub `README.md`.
-
-Jeśli kontrola rozmiaru zgłasza ostrzeżenia, dodaj `$codex-flow-compact-context` jako osobny rekomendowany krok w handoffie; nie rozszerzaj diffu roadmapy o kompakcję.
-
-Uruchomienie `$codex-flow-run-roadmap` autoryzuje koordynatora do lokalnego commita po każdym zatwierdzonym milestone'ie zgodnie z powyższymi zasadami. Nigdy nie wykonuj pusha bez osobnego, jawnego polecenia użytkownika.
+Na końcu podaj zwięzły handoff do `$codex-flow-publish`: wykonane i pozostałe milestone'y, odnośniki do commitów/checkpointów, decyzje review, walidacje, blokery i fakty do synchronizacji dokumentacji. Nie polegaj wyłącznie na historii rozmowy. Ostrzeżenia rozmiaru zgłoś jako osobny krok kompakcji. Nigdy nie wykonuj pusha bez osobnego jawnego polecenia.
