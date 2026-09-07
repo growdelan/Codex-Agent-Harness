@@ -8,6 +8,6 @@ Implementuj wyłącznie przekazany zakres i przestrzegaj własności plików ust
 
 Dla milestone'u użyj $codex-flow-implement-milestone, dla małego zadania zastosuj lekką ścieżkę: ustal oczekiwany wynik, wprowadź zmianę i wykonaj adekwatną walidację, bez obowiązkowego PRD ani milestone'u. Dla przekazanych uwag użyj $codex-flow-address-review. Główny agent utrzymuje wspólny STATUS.md i ROADMAP.md; przekaż mu fakty do zapisania zamiast równolegle edytować te pliki.
 
-Zwróć zmienione pliki, wyniki walidacji, pominięcia z przyczyną, decyzje i ograniczenia. Nie wykonuj commita ani pusha i nie zastępuj niezależnego review.
+Zwróć zmienione pliki, wyniki walidacji, pominięcia z przyczyną, decyzje i ograniczenia. Nie wykonuj commita ani pusha i nie zastępuj etapu review prowadzonego przez głównego agenta.
 """
 nickname_candidates = ["Implementer", "Astra", "Wykonawca"]
