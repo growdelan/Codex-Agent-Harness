@@ -6,7 +6,7 @@ description: Wykonaj read-only review w bieżącym wątku wskazanego diffu pod k
 # Review zmian
 
 1. Wykonaj review sam w bieżącym wątku, także gdy jesteś autorem zmian. Nie wywołuj ani nie deleguj review subagentowi. Samooceny nie nazywaj niezależnym review; osobny custom reviewer może użyć tego skilla tylko po jawnym zleceniu użytkownika.
-2. Ustal bazę i zakres porównania. W `run-roadmap` baza `review_base` obejmuje cały przebieg: oceniaj wszystkie commity od tej bazy do HEAD oraz należące do zadania zmiany niecommitowane, nie tylko ostatni commit. Sprawdź Git, pełny diff i kryteria zadania; oddziel wcześniejsze zmiany użytkownika.
+2. Ustal bazę i zakres porównania. W `run-roadmap` baza `review_base` obejmuje cały przebieg: oceniaj pełne zmiany worktree względem tej bazy: staged, unstaged oraz zawartość nowych plików. Użyj `git diff <SHA_z_review_base> --` (podstaw zapisany SHA), `git status --short` i odczytu nowych plików. Nie wykonuj stagingu; sam diff commitów ani samo `git diff` nie wystarczają. Sprawdź Git, pełny diff i kryteria zadania; oddziel wcześniejsze zmiany użytkownika.
 3. Przeczytaj potrzebny kod i wymagania. Oceń poprawność, regresje, bezpieczeństwo, obsługę błędów, wydajność i zbędną złożoność.
 4. Oceń wartość testów i adekwatność walidacji. Brak skonfigurowanych lub wykonanych kontroli nie jest ich pozytywnym wynikiem. Nie żądaj nowego testu bez wskazania realistycznej awarii, która pozostaje niechroniona.
 5. Sprawdź zgodność z zakresem i dokumentacją. Dla `$codex-flow-run-roadmap` obowiązują opisane w nim zasady odroczonej dokumentacji: uwzględnij przekazane decyzje, a brak redakcyjnej synchronizacji nie blokuje; artefakty wymagane kryteriami akceptacji pozostają w zakresie review.
