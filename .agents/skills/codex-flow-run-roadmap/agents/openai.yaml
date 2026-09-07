@@ -1,4 +1,4 @@
 interface:
   display_name: "Codex Flow: Wykonaj roadmapę"
-  short_description: "Cała roadmapa i review bez commitów"
-  default_prompt: "Użyj $codex-flow-run-roadmap: wykonaj wszystkie otwarte milestone'y, następnie $codex-flow-review w tym samym wątku i w razie uwag $codex-flow-address-review. Maksymalnie trzy rundy poprawek z ponownym review całego worktree. Nie wywołuj subagenta reviewera ani nie wykonuj stagingu, commitów lub pusha."
+  short_description: "Cała roadmapa w jednym wątku bez subagentów"
+  default_prompt: "Użyj $codex-flow-run-roadmap: wykonaj wszystkie otwarte milestone'y, następnie $codex-flow-review w tym samym wątku i w razie uwag $codex-flow-address-review. Maksymalnie trzy rundy poprawek z ponownym review całego worktree. Wszystkie etapy wykonuj samodzielnie w tym wątku. Nie wywołuj żadnych subagentów ani nie wykonuj stagingu, commitów lub pusha."

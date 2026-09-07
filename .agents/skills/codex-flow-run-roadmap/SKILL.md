@@ -1,6 +1,6 @@
 ---
 name: codex-flow-run-roadmap
-description: Wykonaj wszystkie otwarte milestone'y z ROADMAP.md, następnie review całości w tym samym wątku i maksymalnie trzy rundy poprawek z ponownym review. Nie wykonuj stagingu, commitów ani pusha i nie wywołuj subagenta reviewera.
+description: Wykonaj wszystkie otwarte milestone'y z ROADMAP.md, następnie review całości w tym samym wątku i maksymalnie trzy rundy poprawek z ponownym review. Nie wykonuj stagingu, commitów ani pusha i nie wywołuj żadnych subagentów.
 ---
 
 # Wykonanie roadmapy
@@ -14,9 +14,9 @@ description: Wykonaj wszystkie otwarte milestone'y z ROADMAP.md, następnie revi
 
 ## Odpowiedzialność i dokumentacja
 
-Główny agent prowadzi implementację i cały cykl review → poprawki w tej samej rozmowie. `run-roadmap` nigdy nie wywołuje custom agenta `reviewer`, także przez inny skill. Nie zastępuj go innym subagentem do review. Custom reviewer jest dostępny tylko na osobne, jawne polecenie użytkownika, poza tą pętlą. Review we własnym wątku jest samooceną, nie niezależnym review.
+Cały workflow wykonuje główny agent w jednym wątku: rozpoznanie, implementację wszystkich milestone'ów, testy, walidację, review, poprawki i checkpointy. Nie twórz, nie wznawiaj ani nie zlecaj pracy żadnym subagentom — także przez inne skille. Zakaz obejmuje `implementer`, `reviewer`, `planner`, explorerów i agentów wbudowanych. Nie deleguj nawet niezależnych zakresów plików ani kolejnych milestone'ów; realizuj je kolejno samodzielnie.
 
-Opcjonalny `implementer` może wykonać zamknięty fragment implementacji przy konkretnej korzyści z delegowania. Przekaż zakres i własność plików; główny agent odbiera wynik i odpowiada za wspólny checkpoint.
+Wywołanie skilla oznacza wykonanie jego instrukcji w bieżącym wątku, a nie uruchomienie agenta. Ta zasada obowiązuje wszystkie skille używane przez `run-roadmap`. Custom agenci pozostają dostępni poza tym workflow. Review we własnym wątku jest samooceną, nie niezależnym review.
 
 Aktualizuj checkpoint i statusy na bieżąco. Pełną redakcję specyfikacji i README można odłożyć do `$codex-flow-publish`, zachowując decyzje do przekazania dalej. Dokumenty będące kryteriami akceptacji są częścią implementacji i review. Sam brak odroczonej redakcyjnej synchronizacji nie blokuje oceny.
 
