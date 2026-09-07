@@ -33,12 +33,12 @@ Małe, jasno określone zadanie wykonuj bez obowiązkowego PRD i milestone'u: oc
 
 - Główny agent implementuje, waliduje, naprawia zasadne problemy i utrzymuje stan projektu.
 - `reviewer` — niezależne review read-only, `gpt-6-astra`, reasoning `medium`. Uruchamiany wyłącznie na jawne polecenie użytkownika; `run-roadmap` nigdy go nie wywołuje.
-- `implementer` — opcjonalne zamknięte zadania, gdy delegowanie daje konkretną korzyść; `gpt-6-astra`, reasoning `low`.
-- `planner` — opcjonalna niezależna analiza wymagań i planu, read-only; `gpt-6-astra`, reasoning `medium`.
+- `implementer` — poza `run-roadmap`: opcjonalne zamknięte zadania, gdy delegowanie daje konkretną korzyść; `gpt-6-astra`, reasoning `low`.
+- `planner` — poza `run-roadmap`: opcjonalna niezależna analiza wymagań i planu, read-only; `gpt-6-astra`, reasoning `medium`.
 
 Przebieg i warunki zatrzymania pętli definiuje [run-roadmap](.agents/skills/codex-flow-run-roadmap/SKILL.md). Aktualizuje ona `STATUS.md` i statusy roadmapy na bieżąco. Pełna redakcja specyfikacji i README może poczekać do finalizacji; wymagane artefakty produktu są realizowane wraz z milestone'em.
 
-Najpierw powstają implementacje wszystkich otwartych milestone’ów, a po walidacji `codex-flow-review` ocenia cały worktree względem stałej bazy `review_base`, w tym staged, unstaged i nowe pliki. Jeśli są poprawki, `codex-flow-address-review` je wprowadza i review całości jest ponawiane — maksymalnie trzy rundy poprawek łącznie. Całość odbywa się w tym samym wątku, bez stagingu, commitów i pusha.
+Najpierw powstają implementacje wszystkich otwartych milestone’ów, a po walidacji `codex-flow-review` ocenia cały worktree względem stałej bazy `review_base`, w tym staged, unstaged i nowe pliki. Jeśli są poprawki, `codex-flow-address-review` je wprowadza i review całości jest ponawiane — maksymalnie trzy rundy poprawek łącznie. Całość odbywa się w jednym wątku, bez jakichkolwiek subagentów, stagingu, commitów i pusha. Zakaz delegowania obejmuje także implementację, rozpoznanie, testy i walidację oraz wszystkie wywoływane skille. Milestone’y są realizowane kolejno przez głównego agenta.
 
 Checkpoint zawiera stałą bazę porównania, fazę, listę wyników milestone’ów, review, licznik rund, walidację, blokery i następny krok. Implementacja oczekująca na review ma wynik `implemented_pending_review` w checkpointie i status `in_progress` w roadmapie; `done` otrzymuje po pozytywnej ocenie. Blokady nie są pomijane: pętla realizuje pozostałe niezależne elementy i zatrzymuje się przed review całości, jeśli nie można dokończyć całej roadmapy. Checkpoint pozostaje w worktree i zachowuje zbiorczy stan aż do osobnej publikacji. Przy powrocie `$codex-flow-resume` porównuje dokumentację z Git, uwzględnia pracę rozpoczętą i nie polega wyłącznie na historii rozmowy.
 
