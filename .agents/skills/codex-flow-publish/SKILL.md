@@ -7,7 +7,7 @@ description: Przygotuj zakończoną zmianę do publikacji, aktualizując dokumen
 
 1. Ustal dokładny poziom autoryzacji z polecenia użytkownika: przygotowanie, commit albo push. Nie rozszerzaj go.
 2. Sprawdź `git status --short`, pełny diff oraz obecność zmian użytkownika spoza zakresu.
-3. Jeśli zmiana pochodzi z `$codex-flow-run-roadmap`, odczytaj trwały checkpoint w `STATUS.md`, roadmapę i wskazane commity z wcześniejszymi checkpointami; handoff rozmowy jest pomocniczy. Potwierdź dla każdego milestone'u wynik, decyzję review, liczbę rund, walidacje, ryzyka oraz fakty wymagające odzwierciedlenia w dokumentacji. Nie zgaduj brakujących wyników.
+3. Jeśli zmiana pochodzi z `$codex-flow-run-roadmap`, odczytaj trwały checkpoint w `STATUS.md`, roadmapę i wskazane commity z wcześniejszymi checkpointami; handoff rozmowy jest pomocniczy. Potwierdź wyniki milestone'ów, zbiorczy commit implementacji i commity poprawek oraz końcowe review całego zakresu od `review_base`, łączną liczbę rund poprawek, walidacje i blokery. Commit implementacji przed review nie jest dowodem zatwierdzenia. Nie uznawaj częściowego wykonania za ukończenie całej roadmapy. Nie zgaduj brakujących wyników.
 4. Upewnij się, że nie ma nierozwiązanych problemów blokujących i że adekwatna walidacja przeszła. W razie potrzeby uruchom `./scripts/verify.sh`.
 5. Jednorazowo zaktualizuj `ROADMAP.md` i `STATUS.md` zgodnie z checkpointami i stanem faktycznym. Zmień `spec.md` lub `README.md` tylko wtedy, gdy zmieniły się decyzje, zachowanie, uruchamianie albo konfiguracja.
 6. Sprawdź spójność zaktualizowanych `ROADMAP.md`, `STATUS.md`, `spec.md` i `README.md` z diffem implementacyjnym, wynikami review i walidacją.
