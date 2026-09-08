@@ -2,9 +2,20 @@
 
 Roadmapa opisuje możliwe do zweryfikowania przyrosty produktu. Dozwolone statusy: `planned`, `in_progress`, `done`, `blocked`.
 
-Milestone można oznaczyć jako `done`, gdy jego kryteria akceptacji są spełnione, adekwatna walidacja przeszła, a problemy blokujące z review zostały rozwiązane.
+Statusy zmienia prowadzący zadanie według [kontraktu flow](.agents/skills/codex-flow-run-roadmap/references/flow-contract.md): `done` wymaga spełnienia kryteriów, pozytywnej walidacji i aktualnego review, jeśli jest wymagane. Samo zaplanowanie nie oznacza wdrożenia.
+
+## Źródła wymagań
+
+| PRD | Stan planowania (`partial` / `planned`) | Milestone’y | Nierozstrzygnięty zakres |
+|---|---|---|---|
+
+`planned` w tej tabeli oznacza pełne uwzględnienie PRD w planie. Przy ponownym planowaniu aktualizuj istniejące przypisanie. Nie zmieniaj historycznego PRD.
 
 ## Milestone <numer>: <nazwa> (<status>)
+
+### Źródło wymagań
+
+- PRD / bezpośrednie zlecenie:
 
 ### Cel
 

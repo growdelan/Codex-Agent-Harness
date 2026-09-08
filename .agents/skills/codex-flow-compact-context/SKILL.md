@@ -1,6 +1,6 @@
 ---
 name: codex-flow-compact-context
-description: Bezpiecznie uporządkuj i zmniejsz STATUS.md, ROADMAP.md lub spec.md, archiwizując zakończoną historię i dzieląc szczegóły bez zmiany aktualnego zachowania systemu. Użyj zapobiegawczo przed rozbudową dokumentacji, gdy zakończone treści utrudniają odczytanie bieżącego stanu, po ostrzeżeniu scripts/check-context-size.sh, przed resume dużego projektu albo na prośbę użytkownika.
+description: Bezpiecznie uporządkuj i zmniejsz STATUS.md, ROADMAP.md lub spec.md, archiwizując zakończoną historię i dzieląc szczegóły bez zmiany aktualnego zachowania systemu. Użyj zapobiegawczo przed rozbudową dokumentacji, gdy zakończone treści utrudniają odczytanie bieżącego stanu, podczas planowania z PRD albo na jawne polecenie użytkownika. W innych workflow jedynie zalecaj kompakcję, także po ostrzeżeniu lub przed resume.
 ---
 
 # Kompakcja kontekstu projektu
@@ -11,8 +11,8 @@ description: Bezpiecznie uporządkuj i zmniejsz STATUS.md, ROADMAP.md lub spec.m
 
 ## STATUS.md
 
-- Zachowaj aktualny zakres, stan pracy, następny krok, aktywne blokery, ostatnią istotną walidację i krótki handoff.
-- Usuń powtórzenia, pełne logi i zamkniętą historię. Historia pozostaje w Git; nie twórz osobnego archiwum statusu bez konkretnej potrzeby audytowej.
+- Zachowaj aktualny zakres, stan pracy, następny krok, aktywne blokery, ostatnią istotną walidację i krótki handoff. Chroń wszystkie pola nieopublikowanego przebiegu zgodnie z [kontraktem flow](../codex-flow-run-roadmap/references/flow-contract.md), również w fazie `complete`.
+- Usuń powtórzenia, pełne logi i zamkniętą historię. Nie zakładaj, że dane niecommitowanego przebiegu istnieją w Git. Starsze pełne raporty zastępuj wynikami rozwiązania uwag, zachowując ostatni raport, licznik i istotne uzasadnienia; nie twórz osobnego archiwum statusu bez konkretnej potrzeby audytowej.
 
 ## ROADMAP.md
 

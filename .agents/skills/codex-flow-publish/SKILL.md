@@ -5,17 +5,16 @@ description: Przygotuj zakończoną zmianę do publikacji, aktualizując dokumen
 
 # Publikacja zmiany
 
-Ten skill nie wymaga ani nie uruchamia review, niezależnego review, subagenta reviewera ani pętli poprawek. Brak raportu lub decyzji `APPROVED` nie jest blokerem publikacji. Review jest osobnym zadaniem na jawne polecenie użytkownika; kontrola diffu i walidacji poniżej nie oznacza uruchomienia review.
+Autoryzację, wymagane review, aktualność ocenionej treści i zamknięcie checkpointu definiuje [kontrakt flow](../codex-flow-run-roadmap/references/flow-contract.md). Ten skill sam nie uruchamia review ani pętli poprawek. Nie pomija wymaganego wcześniej review i nie przedstawia kontroli dokumentacji jako niezależnej oceny.
 
-1. Ustal dokładny poziom autoryzacji z polecenia użytkownika: przygotowanie, commit albo push. Nie rozszerzaj go.
-2. Sprawdź `git status --short`, pełny diff oraz obecność zmian użytkownika spoza zakresu.
-3. Jeśli zmiana pochodzi z `$codex-flow-run-roadmap`, odczytaj trwały checkpoint w `STATUS.md`, roadmapę i cały zakres zmian worktree, w tym nowe pliki; handoff rozmowy jest pomocniczy. Potwierdź wyniki milestone'ów, aktualny zakres plików, wykonane walidacje i znane blokery. Nie wymagaj commitów implementacji ani poprawek: `run-roadmap` ich nie tworzy. Nie uznawaj częściowego wykonania za ukończenie całej roadmapy. Nie zgaduj brakujących wyników.
-4. Upewnij się, że nie ma nierozwiązanych problemów blokujących i że adekwatna walidacja przeszła. W razie potrzeby uruchom `./scripts/verify.sh`.
-5. Jednorazowo zaktualizuj `ROADMAP.md` i `STATUS.md` zgodnie z checkpointami i stanem faktycznym. Zmień `spec.md` lub `README.md` tylko wtedy, gdy zmieniły się decyzje, zachowanie, uruchamianie albo konfiguracja.
-6. Sprawdź spójność zaktualizowanych `ROADMAP.md`, `STATUS.md`, `spec.md` i `README.md` z diffem implementacyjnym i walidacją.
-7. Uruchom `./scripts/check-context-size.sh`. Jeśli występują ostrzeżenia, zgłoś `$codex-flow-compact-context` jako osobny rekomendowany krok; nie rozszerzaj publikowanego diffu o kompakcję, chyba że użytkownik jawnie objął ją zakresem zmiany.
-8. Jeśli użytkownik poprosił tylko o przygotowanie, zatrzymaj się przed stagingiem i commitem.
-9. Jeśli użytkownik poprosił o commit, stage'uj wyłącznie pliki z uzgodnionego zakresu i utwórz logiczny commit.
-10. Wykonaj push tylko na jawne polecenie `push`, `opublikuj` lub równoważne i tylko do właściwego remote/brancha. Jeśli użytkownik chce użyć `github:yeet`, zakończ synchronizację i walidację przed przekazaniem mu stagingu, commita, pusha i utworzenia draft PR.
+1. Ustal autoryzację: `przygotuj`, `commit`, `push` albo `opublikuj`. Sam `push` wysyła istniejące uzgodnione commity; nie tworzy commita ani nie synchronizuje plików. Dla niego przejdź do kontroli zakresu i historii z punktów 2, 3, 4 i 9.
+2. Sprawdź pełny status, diff względem właściwej bazy, nowe pliki i istniejący indeks. Oddziel zmiany użytkownika według kontraktu. Zweryfikuj zakres także na poziomie treści, nie tylko nazw plików.
+3. Odczytaj checkpoint, jeśli zmiana pochodzi z milestone'u lub `run-roadmap`. Potwierdź wyniki, walidację i wymagane review; sprawdź fingerprint, jeśli wykonano review. Brak opcjonalnego review nie wymaga sztucznego raportu ani fingerprintu. Nie uznawaj częściowej roadmapy za ukończoną i nie zgaduj brakujących wyników. Dla samego pusha sprawdzaj checkpoint i zakres w commitach przeznaczonych do wysłania, nie wynik późniejszej pracy w worktree.
+4. Potwierdź brak nierozwiązanych blokerów oraz adekwatną walidację właściwej treści. W razie potrzeby uruchom kontrole repo. Sama kontrola harnessu ani pominięte testy nie potwierdzają walidacji produktu. Jeśli brakuje wymaganego review lub trzeba ponownie ocenić zmianę zachowania, wskaż ten osobny krok i zatrzymaj publikację.
+5. Dla przygotowania lub commita zsynchronizuj STATUS i ROADMAP ze stanem faktycznym; spec i README tylko, jeśli wymagają tego decyzje, zachowanie, użycie lub konfiguracja. Nie zmieniaj statusów na podstawie samego polecenia publikacji.
+6. Sprawdź zmienioną dokumentację z implementacją i walidacją. Aktualizację fingerprintu po czystej synchronizacji wykonaj zgodnie z kontraktem; nie odświeżaj go automatycznie po innych zmianach. Po zmianie skryptów, kodu lub konfiguracji ponów właściwe kontrole.
+7. Uruchom `./scripts/check-context-size.sh`; zalecaj kompakcję jako osobny krok, chyba że użytkownik objął ją zakresem. Przy samym przygotowaniu pozostaw `publication: pending` i zatrzymaj się przed stagingiem.
+8. Przy upoważnieniu do commita zapisz końcowy checkpoint z `publication: prepared` (jeśli istnieje i STATUS nie jest sam ocenianym artefaktem), skontroluj diff i stage'uj tylko uzgodniony zakres. Sprawdź, że commit nie zabierze cudzych zmian z indeksu. Utwórz logiczny commit bez pustych commitów. Po sukcesie potwierdź jego zawartość; nie twórz kolejnego commita tylko dla zapisania SHA w STATUS. Po porażce wyjaśnij, że `prepared` nie oznacza udanego commita.
+9. Push wykonuj tylko w upoważnionym zakresie: sprawdź remote, branch i wszystkie wychodzące commity. Sam `push` nie wysyła niecommitowanego wyniku. Nie używaj force push domyślnie. Jeśli użytkownik jawnie wybiera zewnętrzny workflow publikacji, przekaż mu ustaloną autoryzację i zakres po odpowiednich kontrolach; nie rozszerzaj zgody na utworzenie PR.
 
-Nie twórz pustych commitów, nie ukrywaj nieprzechodzącej walidacji i nie włączaj cudzych zmian do publikacji. Podaj zaktualizowane dokumenty, walidacje oraz faktyczny status commita i pusha.
+Podaj walidację, znane ograniczenia i faktyczny wynik przygotowania, commita i pusha. Nie deklaruj publikacji niecommitowanej pracy ani nie zmieniaj plików tylko po to, by zapisać raport z samego pusha.

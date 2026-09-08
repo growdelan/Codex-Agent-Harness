@@ -7,20 +7,21 @@
 
 ## Kontekst projektu
 
-- Trwałe decyzje produktowe i techniczne zapisuj w `spec.md`.
+- Obowiązujące wymagania i trwałe decyzje zapisuj w `spec.md`; stan wdrożenia potwierdzaj w roadmapie i kodzie.
+- Wspólne zasady statusów, checkpointów, review i publikacji definiuje [kontrakt flow](.agents/skills/codex-flow-run-roadmap/references/flow-contract.md). Skille opisują kroki poszczególnych zadań.
 - Plan i statusy prac utrzymuj w `ROADMAP.md`.
 - Bieżący stan, ostatnią walidację, blokery i następny krok zapisuj w `STATUS.md`.
 - Czytaj tylko pliki potrzebne do aktualnej decyzji. Przy kontynuacji zacznij od `STATUS.md` i właściwego fragmentu `ROADMAP.md`.
 - Traktuj limity kontekstu jako progi ostrzegawcze: `STATUS.md` 150 linii / 12 KB, `ROADMAP.md` 350 linii / 30 KB, `spec.md` 500 linii / 40 KB.
 - Gdy dokument przekracza próg, wykonaj kompakcję automatycznie tylko podczas `$codex-flow-plan-from-prd` albo jawnie uruchomionego `$codex-flow-compact-context`. W pozostałych workflow zgłoś ją jako osobny rekomendowany krok i nie rozszerzaj bieżącego diffu.
 - Nie czytaj `docs/archive/` podczas zwykłego resume, planowania ani implementacji, chyba że bieżąca decyzja wymaga historii.
-- Ukończone szczegóły roadmapy archiwizuj w `docs/archive/roadmap/`; szczegóły aktualnej specyfikacji dziel między `docs/spec/` i `docs/decisions/`, zachowując `spec.md` jako indeks aktualnej prawdy.
+- Ukończone szczegóły roadmapy archiwizuj w `docs/archive/roadmap/`; szczegóły aktualnej specyfikacji dziel między `docs/spec/` i `docs/decisions/`, zachowując `spec.md` jako indeks obowiązujących wymagań i decyzji.
 
 ## Środowisko Python
 
 - Używaj `uv` do środowiska i zależności. Dodawaj zależności przez `uv add <pakiet>`.
 - Nie twórz alternatywnych virtualenvów ani zależności „na zapas”.
-- Uzasadniaj nowe zależności w `spec.md` w sekcji `## Decyzje techniczne`.
+- Uzasadniaj nowe zależności w sekcji `## Decyzje techniczne` w `spec.md` albo linkowanym z niej dokumencie szczegółowym.
 - Kod aplikacji trzymaj w `src/`, a testy w `tests/`.
 - Preferuj jeden główny entrypoint opisany w `README.md`.
 
@@ -44,7 +45,7 @@
 - Nie traktuj liczby testów ani pokrycia jako celu. Review nie może żądać dodatkowego testu bez wskazania wartościowego zachowania lub realistycznego ryzyka, które pozostaje niechronione.
 - Po istotnej zmianie zapisz w `STATUS.md` wykonaną walidację i jej wynik.
 - Nie używaj `STATUS.md` jako dziennika. Zachowuj bieżący stan, ostatnią istotną walidację, aktywne ryzyka i następny krok.
-- Dla ryzykownych lub większych zmian wykonaj niezależne review diffu przed publikacją.
+- Dla ryzykownych lub większych zmian wykonaj samoocenę diffu. Niezależne review wykonuje osobny agent wyłącznie na jawne zlecenie użytkownika, poza `run-roadmap`. Zasady wymaganej oceny przed publikacją określa kontrakt flow.
 - Nie ukrywaj nieprzechodzącej walidacji ani problemów blokujących.
 
 ## Git i dokumentacja

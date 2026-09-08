@@ -8,7 +8,7 @@ description: Przeprowadź z użytkownikiem wywiad produktowy i utwórz pierwszy 
 ## Rozpoznanie
 
 1. Przyjmij początkowy opis aplikacji lub funkcjonalności jako punkt wyjścia, nie jako kompletną specyfikację.
-2. Sprawdź katalog `prd/`, aby rozpoznać istniejące dokumenty i kolejny numer. Nie czytaj kodu, jeśli nie jest niezbędny do zadania konkretnego pytania o istniejące zachowanie.
+2. Sprawdź katalog `prd/`, aby rozpoznać istniejące dokumenty i kolejny numer. Pusty `000-initial-prd.md` jest szablonem, nie ukończonym PRD. Nie czytaj kodu, jeśli nie jest niezbędny do zadania konkretnego pytania o istniejące zachowanie.
 3. Ustal, czy powstaje pierwszy PRD projektu, czy przyrostowy PRD nowej funkcjonalności.
 
 ## Wywiad
