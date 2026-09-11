@@ -1,6 +1,6 @@
 ---
 name: codex-flow-resume
-description: Odtwórz stan istniejącego projektu po rozpoczęciu nowej sesji lub powrocie do przerwanej pracy. Użyj, gdy użytkownik chce kontynuować projekt, poznać aktualny stan albo ustalić najbliższy bezpieczny krok bez modyfikowania plików.
+description: Odtwórz stan projektu i wskaż następny krok bez zmian w plikach. Użyj na prośbę o status lub rozpoznanie przerwanej pracy; przy zleceniu implementacji rozpoznanie jest etapem wstępnym, po którym kontynuuj zleconą pracę.
 ---
 
 # Wznowienie projektu

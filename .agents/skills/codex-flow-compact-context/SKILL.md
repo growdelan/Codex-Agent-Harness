@@ -1,6 +1,6 @@
 ---
 name: codex-flow-compact-context
-description: Bezpiecznie uporządkuj i zmniejsz STATUS.md, ROADMAP.md lub spec.md, archiwizując zakończoną historię i dzieląc szczegóły bez zmiany aktualnego zachowania systemu. Użyj zapobiegawczo przed rozbudową dokumentacji, gdy zakończone treści utrudniają odczytanie bieżącego stanu, podczas planowania z PRD albo na jawne polecenie użytkownika. W innych workflow jedynie zalecaj kompakcję, także po ostrzeżeniu lub przed resume.
+description: Uporządkuj STATUS.md, ROADMAP.md i spec.md bez utraty aktywnych ustaleń. Uruchamiaj na jawną prośbę lub w ramach codex-flow-plan-from-prd; w pozostałych workflow tylko rekomenduj.
 ---
 
 # Kompakcja kontekstu projektu

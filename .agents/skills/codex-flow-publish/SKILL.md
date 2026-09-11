@@ -5,7 +5,7 @@ description: Przygotuj zakończoną zmianę do publikacji, aktualizując dokumen
 
 # Publikacja zmiany
 
-Autoryzację, wymagane review, aktualność ocenionej treści i zamknięcie checkpointu definiuje [kontrakt flow](../codex-flow-run-roadmap/references/flow-contract.md). Ten skill sam nie uruchamia review ani pętli poprawek. Nie pomija wymaganego wcześniej review i nie przedstawia kontroli dokumentacji jako niezależnej oceny.
+W kontrakcie flow przeczytaj [autoryzację publikacji](../codex-flow-run-roadmap/references/flow-contract.md#autoryzacja-publikacji), [własność zmian](../codex-flow-run-roadmap/references/flow-contract.md#własność-zmian-i-zakres-review) oraz [wymagania review](../codex-flow-run-roadmap/references/flow-contract.md#review-i-zakończenie-pracy). Jeśli zmiana ma checkpoint, doczytaj [cykl życia przebiegu](../codex-flow-run-roadmap/references/flow-contract.md#statusy-i-cykl-życia-przebiegu); jeśli była oceniana, także [aktualność oceny](../codex-flow-run-roadmap/references/flow-contract.md#aktualność-oceny). Pozostałe sekcje doczytuj tylko wtedy, gdy wymaga tego bieżąca decyzja. Ten skill sam nie uruchamia review ani pętli poprawek. Nie pomija wymaganego wcześniej review i nie przedstawia kontroli dokumentacji jako niezależnej oceny.
 
 1. Ustal autoryzację: `przygotuj`, `commit`, `push` albo `opublikuj`. Sam `push` wysyła istniejące uzgodnione commity; nie tworzy commita ani nie synchronizuje plików. Dla niego przejdź do kontroli zakresu i historii z punktów 2, 3, 4 i 9.
 2. Sprawdź pełny status, diff względem właściwej bazy, nowe pliki i istniejący indeks. Oddziel zmiany użytkownika według kontraktu. Zweryfikuj zakres także na poziomie treści, nie tylko nazw plików.

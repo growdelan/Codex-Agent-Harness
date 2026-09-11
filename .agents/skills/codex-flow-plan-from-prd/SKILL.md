@@ -5,7 +5,7 @@ description: Utwórz lub zaktualizuj spec.md i ROADMAP.md na podstawie pierwszeg
 
 # Planowanie z PRD
 
-Znaczenie specyfikacji, mapowanie PRD i granice aktywnego przebiegu określa [kontrakt flow](../codex-flow-run-roadmap/references/flow-contract.md).
+W kontrakcie flow przeczytaj sekcję [wymagania i małe zadania](../codex-flow-run-roadmap/references/flow-contract.md#wymagania-i-małe-zadania); przy istniejącym nieopublikowanym przebiegu także [statusy i cykl życia przebiegu](../codex-flow-run-roadmap/references/flow-contract.md#statusy-i-cykl-życia-przebiegu). Pozostałe sekcje doczytuj tylko wtedy, gdy wymaga tego bieżąca decyzja.
 
 1. Ustal wskazany plik PRD. Jeśli użytkownik go nie podał, wybierz go tylko wtedy, gdy w `prd/` istnieje jeden oczywisty kandydat.
 2. Uruchom `./scripts/check-context-size.sh`. Przeczytaj PRD, `STATUS.md`, aktywne milestone'y w `ROADMAP.md` oraz indeks i istotne części `spec.md`. Nie czytaj archiwum ani niepowiązanych dokumentów domenowych.
