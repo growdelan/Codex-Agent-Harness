@@ -8,7 +8,7 @@ Ten dokument definiuje wspólne reguły workflow. AGENTS.md zawiera stałe zasad
 - Niezależne review oznacza ocenę przez osobnego agenta, który nie implementował zmiany. Jest dostępne poza `run-roadmap` wyłącznie na jawne zlecenie użytkownika. Samooceny nie nazywaj niezależnym review.
 - Samodzielny milestone wymaga adekwatnej walidacji; większa lub ryzykowna zmiana także samooceny. Dla małej zmiany bez takiego ryzyka review jest opcjonalne. Jawnie zamówione review jest częścią kryteriów zakończenia zadania.
 - `publish` sam nie uruchamia review. Brak review nie blokuje zadania, które go nie wymagało. Nie omija jednak wymaganego lub zamówionego review, znanych blokerów ani nieaktualnego zatwierdzenia.
-- Skill `review` jest read-only i zwraca decyzję. Statusy zapisuje agent prowadzący zadanie po otrzymaniu wyniku, również gdy reviewer był niezależny.
+- Etap review jest read-only i zwraca decyzję. Statusy zapisuje agent prowadzący zadanie po otrzymaniu wyniku, również gdy reviewer był niezależny.
 
 ## Statusy i cykl życia przebiegu
 

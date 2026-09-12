@@ -14,7 +14,7 @@ from urllib.parse import unquote, urlsplit
 SKILLS = (
     "codex-flow-address-review", "codex-flow-compact-context", "codex-flow-create-prd",
     "codex-flow-implement-milestone", "codex-flow-plan-from-prd", "codex-flow-publish",
-    "codex-flow-resume", "codex-flow-review", "codex-flow-run-roadmap",
+    "codex-flow-resume", "codex-flow-run-roadmap",
 )
 AGENTS = ("implementer", "planner", "reviewer")
 LINK = re.compile(r"""

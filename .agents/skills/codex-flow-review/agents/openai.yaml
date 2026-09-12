@@ -1,4 +1,0 @@
-interface:
-  display_name: "Codex Flow: Review"
-  short_description: "Przejrzyj zmiany w bieżącym wątku"
-  default_prompt: "Użyj $codex-flow-review, aby ocenić wskazany zakres w tym samym wątku, bez wywoływania subagenta i bez modyfikowania plików."

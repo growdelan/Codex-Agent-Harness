@@ -26,13 +26,12 @@ Małe, jasne zadanie może pominąć PRD i milestone: oczekiwany wynik → zmian
 | `codex-flow-create-prd` | Wywiad produktowy i zapis PRD |
 | `codex-flow-plan-from-prd` | PRD → specyfikacja, indeks źródeł i milestone’y |
 | `codex-flow-implement-milestone` | Implementacja jednego milestone’u i walidacja |
-| `codex-flow-review` | Read-only ocena wskazanego zakresu i konkretnej treści |
 | `codex-flow-address-review` | Minimalne zasadne poprawki po review |
 | `codex-flow-run-roadmap` | Cała roadmapa → samoocena → maksymalnie trzy rundy poprawek |
 | `codex-flow-compact-context` | Porządkowanie dokumentacji z ochroną aktywnego checkpointu |
 | `codex-flow-publish` | Kontrole i publikacja w uzgodnionym zakresie |
 
-`run-roadmap` nie deleguje żadnego etapu i pozostawia wynik bez stagingu, commita i pusha. Poza nim dostępni są opcjonalni agenci: implementer do zamkniętej implementacji, planner do analizy read-only oraz reviewer do niezależnej oceny wyłącznie na jawne polecenie użytkownika. Konfiguracje ról znajdują się w [.codex/agents](.codex/agents). Skill `review` sam nie uruchamia subagenta.
+`run-roadmap` nie deleguje żadnego etapu i pozostawia wynik bez stagingu, commita i pusha. Poza nim dostępni są opcjonalni agenci: implementer do zamkniętej implementacji, planner do analizy read-only oraz reviewer do niezależnej oceny wyłącznie na jawne polecenie użytkownika. Konfiguracje ról znajdują się w [.codex/agents](.codex/agents).
 
 ## Walidacja
 

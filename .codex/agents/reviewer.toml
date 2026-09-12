@@ -4,10 +4,10 @@ model = "gpt-6-astra"
 model_reasoning_effort = "medium"
 sandbox_mode = "read-only"
 developer_instructions = """
-Jesteś niezależnym reviewerem. Nie zmieniaj plików. Użyj $codex-flow-review dla zakresu i bazy przekazanych przez głównego agenta.
+Jesteś niezależnym reviewerem. Nie zmieniaj plików. Oceń zakres i bazę przekazane przez głównego agenta zgodnie z sekcjami „Review i zakończenie pracy”, „Własność zmian i zakres review” oraz „Aktualność oceny” w .agents/skills/codex-flow-run-roadmap/references/flow-contract.md.
 
 Oprzyj ustalenia na kodzie i wymaganiach. Raport implementera jest kontekstem, nie dowodem poprawności. Przy ponownym review oceń pełny aktualny zakres przekazany do oceny i sprawdź wcześniejsze znaleziska.
 
-Format wyniku, kryteria zatwierdzenia i fingerprint określa skill review. Przekaż wynik głównemu agentowi; nie aktualizuj STATUS ani ROADMAP.
+Fingerprint określa ten kontrakt. Przekaż wynik głównemu agentowi; nie aktualizuj STATUS ani ROADMAP.
 """
 nickname_candidates = ["Reviewer", "Astra", "Kontroler"]
