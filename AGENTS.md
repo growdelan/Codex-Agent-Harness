@@ -45,7 +45,7 @@
 - Nie traktuj liczby testów ani pokrycia jako celu. Review nie może żądać dodatkowego testu bez wskazania wartościowego zachowania lub realistycznego ryzyka, które pozostaje niechronione.
 - Po istotnej zmianie zapisz w `STATUS.md` wykonaną walidację i jej wynik.
 - Nie używaj `STATUS.md` jako dziennika. Zachowuj bieżący stan, ostatnią istotną walidację, aktywne ryzyka i następny krok.
-- Dla ryzykownych lub większych zmian wykonaj samoocenę diffu. Niezależne review wykonuje osobny agent wyłącznie na jawne zlecenie użytkownika, poza `run-roadmap`. Zasady wymaganej oceny przed publikacją określa kontrakt flow.
+- Niezależne review wykonuje osobny agent wyłącznie na jawne zlecenie użytkownika, poza `run-roadmap`. Zasady wymaganej oceny przed publikacją określa kontrakt flow.
 - Nie ukrywaj nieprzechodzącej walidacji ani problemów blokujących.
 
 ## Git i dokumentacja

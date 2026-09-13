@@ -13,7 +13,7 @@ Szablon współpracy z Codexem: wymagania z PRD, małe milestone’y, walidacja 
 
 1. `$codex-flow-create-prd` — wywiad i pierwszy lub kolejny dokument w `prd/`.
 2. `$codex-flow-plan-from-prd` — wymagania, mapowanie PRD i mierzalna roadmapa. Dla nowego projektu planuje Milestone 0: uruchamialny rezultat i rzeczywistą walidację; nie implementuje go.
-3. `$codex-flow-implement-milestone` — wskazany milestone; albo `$codex-flow-run-roadmap` — wszystkie otwarte milestone’y, potem samoocena całości i maksymalnie trzy rundy poprawek.
+3. `$codex-flow-implement-milestone` — wskazany milestone; albo `$codex-flow-run-roadmap` — wszystkie otwarte milestone’y, potem walidacja integracji.
 4. `$codex-flow-publish` — przygotowanie, commit lub push w jawnym zakresie autoryzacji.
 
 Małe, jasne zadanie może pominąć PRD i milestone: oczekiwany wynik → zmiana → adekwatna walidacja. Szczegóły statusów, własności zmian, checkpointu i autoryzacji określa [kontrakt flow](.agents/skills/codex-flow-run-roadmap/references/flow-contract.md); kolejność i warunki zatrzymania całej pętli — [run-roadmap](.agents/skills/codex-flow-run-roadmap/SKILL.md).
@@ -27,7 +27,7 @@ Małe, jasne zadanie może pominąć PRD i milestone: oczekiwany wynik → zmian
 | `codex-flow-plan-from-prd` | PRD → specyfikacja, indeks źródeł i milestone’y |
 | `codex-flow-implement-milestone` | Implementacja jednego milestone’u i walidacja |
 | `codex-flow-address-review` | Minimalne zasadne poprawki po review |
-| `codex-flow-run-roadmap` | Cała roadmapa → samoocena → maksymalnie trzy rundy poprawek |
+| `codex-flow-run-roadmap` | Cała roadmapa → walidacja integracji |
 | `codex-flow-compact-context` | Porządkowanie dokumentacji z ochroną aktywnego checkpointu |
 | `codex-flow-publish` | Kontrole i publikacja w uzgodnionym zakresie |
 
@@ -35,7 +35,7 @@ Małe, jasne zadanie może pominąć PRD i milestone: oczekiwany wynik → zmian
 
 ## Walidacja
 
-- `./scripts/verify-harness.sh` sprawdza składnię skryptów shellowych harnessu, rozmiary pamięci, wymagane pola konfiguracji dziewięciu skillów i trzech agentów harnessu, obsługiwane lokalne linki Markdown. Nie narzuca formatu innym skillom ani agentom projektu. Nie ocenia semantycznej zgodności instrukcji — ta wymaga review.
+- `./scripts/verify-harness.sh` sprawdza składnię skryptów shellowych harnessu, rozmiary pamięci, wymagane pola konfiguracji ośmiu skillów i trzech agentów harnessu, obsługiwane lokalne linki Markdown. Nie narzuca formatu innym skillom ani agentom projektu. Nie ocenia semantycznej zgodności instrukcji — ta wymaga review.
 - `./scripts/verify.sh` uruchamia kontrolę harnessu i jawnie skonfigurowane kontrole produktu. Domyślnie próbuje `unittest`, gdy istnieje katalog `tests/`. W Milestone 0 dopasuj ten fragment do smoke testu, testów, lintowania lub builda projektu.
 - Brak `tests/` albo zero znalezionych przypadków nie jest pozytywną walidacją produktu, nawet gdy kod wyjścia wynosi `0`.
 - `scripts/review-snapshot.py` identyfikuje treść jawnie wskazanych plików do porównania z ocenioną wersją; jego użycie i wyjątki dokumentacyjne opisuje kontrakt flow.
